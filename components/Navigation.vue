@@ -25,16 +25,17 @@
 </script>
 
 
-<style>
+<style scoped>
 
 .navigationContainer {
     font-size: 2em;
-      display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 50px;
+    }
 
 ul {
     list-style: none;
@@ -49,6 +50,11 @@ li {
 span {
     text-decoration: none;
     color: darkgray;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 span:hover {

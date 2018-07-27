@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Contact / Bookings</h2>
+        <!--<h2>Contact / Bookings</h2>-->
         <newsletter-sign-up/>
     </div>
 </template>
@@ -14,3 +14,4 @@ export default {
   }
 }
 </script>
+

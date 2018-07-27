@@ -1,33 +1,34 @@
 <template>
     <div class="newsletterSignUpContainer">
-        <form id="app" @submit="checkForm" action="/home" method="post">
 
-            <p v-if="errors.length">
+        <span class="successMessage" v-if="formSuccessful">{{successMessage}}</span>
+
+        <form id="app" @submit="checkForm" method="post" v-if="!formSuccessful">
+
+            <div v-if="errors.length">
                 <b>Please correct the following error(s):</b>
-            </p>
+            </div>
 
-            <p>
-                <label for="name">Name</label>
-                        <input type="text" name="name" id="name" v-model="name">
-            </p>
+            <div class="inputField">
+                <label for="name">Name <span class="optional">(optional)</span></label>
+                <input type="text" name="name" id="name" v-model="name">
+            </div>
 
-            <p>
-                <label for="age">Age</label>
-                        <input type="number" name="age" id="age" v-model="age">
-            </p>
+            <div class="inputField">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" v-model="email">
+                <span class="errorMessage">{{errors.email}}</span>
+            </div>
 
-            <p>
-                <label for="movie">Favorite Movie</label>
-                        <select name="movie" id="movie" v-model="movie">
-                            <option>Star Wars</option>
-                            <option>Vanilla Sky</option>
-                            <option>Atomic Blonde</option>
-                        </select>
-            </p>
+            <div class="inputField">
+                <label for="message">Message</label>
+                <textarea name="message" id="message" v-model="message"></textarea>
+                <span class="errorMessage">{{errors.message}}</span>
+            </div>
 
-            <p>
+            <div class="">
                 <input type="submit" value="Submit">
-            </p>
+            </div>
 
         </form>
     </div>
@@ -37,24 +38,34 @@
 export default {
     data: function() {
         return {
-            errors: [],
+            errors: {},
             name: null,
-            age: null,
-            movie: null
+            email: null,
+            message: null,
+            successMessage: "Message submitted.",
+            formSuccessful: false
         }
     },
     methods: {
         checkForm: function(e) {
-            if (this.name && this.age) return true;
-            this.errors = [];
-            if (!this.name) this.errors.push("Name required.");
-            if (!this.age) this.errors.push("Age required.");
             e.preventDefault();
-            submitForm(e);
-        },
-        submitForm: function(e) {
-            console.log('Form submitted');
-            e.preventDefault();
+            if (this.email && this.message) {
+                this.name = "";
+                this.email = "";
+                this.message = "";
+                this.errors = {};
+                this.formSuccessful = true;
+                return true;
+            }else {
+                this.errors = {};
+            }
+            
+            if (!this.email) {
+                this.errors['email'] = "Email required.";
+            }
+            if (!this.message) {
+                this.errors['message'] = "Message required.";
+            }
         }
     }
 }
@@ -62,5 +73,42 @@ export default {
 
 
 <style>
+
+.newsletterSignUpContainer {
+    width: 250px;
+    margin: auto;
+}
+
+.optional {
+    font-style: italic;
+}
+
+.successMessage {
+    color: green;
+}
+
+.errorMessage {
+    color: red;
+}
+
+.inputField {
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    background: transparent;
+    border: 1px solid gray;
+    width: 100%;
+}
+
+textarea {
+    min-height: 50px;
+    max-width: 98%;
+    min-width: 98%;
+}
+
+input[type="submit"] {
+    width: 50%;
+}
 
 </style>
